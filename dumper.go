@@ -139,7 +139,7 @@ func worker(jobChan <-chan string, resChan chan<- string, wg *sync.WaitGroup) {
 		valid := config.VerifyPeerCertificate(certChain, [][]*x509.Certificate{})
 		if valid == nil { //invalid cert
 			// log.Println(valid)
-			resChan <- fmt.Sprintf("%s,%s,%s\n", cn, host, port)
+			resChan <- fmt.Sprintf("%s,%s,%s", cn, host, port)
 			// continue
 		}
 	}
