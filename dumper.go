@@ -116,7 +116,7 @@ func worker(jobChan <-chan string, resChan chan<- string, wg *sync.WaitGroup) {
 			port = tmp[1]
 		}
 		conn, err := hackyDialWithDialer(&net.Dialer{
-			Timeout: time.Second * 10,
+			Timeout: time.Second * 5,
 		}, "tcp", host+":"+port, config)
 		if err != nil {
 			// log.Println(err)
@@ -139,7 +139,7 @@ func worker(jobChan <-chan string, resChan chan<- string, wg *sync.WaitGroup) {
 		valid := config.VerifyPeerCertificate(certChain, [][]*x509.Certificate{})
 		if valid == nil { //invalid cert
 			// log.Println(valid)
-			resChan <- cn
+			resChan <- fmt.Sprintf("%s,%s,%s\n", cn, host, port)
 			// continue
 		}
 	}
